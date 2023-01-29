@@ -25,11 +25,12 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: Center(
+      body: const Center(
           child: Text(
-        "LOGGED IN AS: ${user.email!}",
-        style: const TextStyle(fontSize: 20),
+        "LOGGED IN AS: USER",
+        style: TextStyle(fontSize: 20),
       )),
     );
   }
 }
+// ${user.email!}
