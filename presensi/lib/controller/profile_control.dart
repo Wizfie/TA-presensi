@@ -8,7 +8,7 @@ FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
-  String uid = await auth.currentUser!.uid;
+  String uid = auth.currentUser!.uid;
 
   yield* firestore.collection("siswa").doc(uid).snapshots();
 }

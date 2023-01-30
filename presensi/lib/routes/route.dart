@@ -5,8 +5,9 @@ import 'package:presensi/pages/add_siswa.dart';
 import 'package:presensi/pages/form_profile.dart';
 import 'package:presensi/pages/home_admin.dart';
 import 'package:presensi/pages/login_page.dart';
-import 'package:presensi/pages/profile_user.dart';
+import 'package:presensi/pages/profile_view.dart';
 import 'package:presensi/pages/reset_password.dart';
+import 'package:presensi/pages/update_profile.dart';
 
 class AppPage {
   static final pages = [
@@ -51,6 +52,13 @@ class AppPage {
       transition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
+    GetPage(
+      name: RouteName.updateprofile,
+      page: () =>  UpdateProfile(),
+      middlewares: [MyMiddelware()],
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
   ];
 }
 
@@ -69,4 +77,5 @@ abstract class RouteName {
   static const addsiswa = "/addSiswa";
   static const form = "/form";
   static const resetP = "/resetpassword";
+  static const updateprofile = "/updateprofile";
 }
