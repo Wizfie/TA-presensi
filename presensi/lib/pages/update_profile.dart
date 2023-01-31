@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi/controller/update_profile_control.dart';
@@ -9,6 +8,8 @@ class UpdateProfile extends StatelessWidget {
   final controller = Get.put(UpdateProfileController(String));
 
   Map<String, dynamic> user = Get.arguments;
+
+  UpdateProfile({super.key});
   @override
   Widget build(BuildContext context) {
     controller.updateNim.text = user['nim'];

@@ -2,18 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:presensi/component/my_button.dart';
 import 'package:presensi/component/my_textfield.dart';
 import 'package:presensi/component/square_tile.dart';
+import 'package:presensi/controller/forgot_password_control.dart';
 import 'package:presensi/controller/login_control.dart';
-import 'package:presensi/routes/route.dart';
+
+import '../routes/route.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-
-  // text editing controllers
-
-  // sign user in method
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +72,7 @@ class LoginPage extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           Get.toNamed(RouteName.resetP);
+                          // resetPassword();
                         },
                         child: const Text(
                           "Forgot password?",
@@ -89,11 +89,9 @@ class LoginPage extends StatelessWidget {
                 // sign in button
                 MyButton(
                   onPress: () async {
-                    if (isLoading.isFalse) {
-                      await login();
-                      emailC.clear();
-                      passwordC.clear();
-                    }
+                    await login();
+                    emailC.clear();
+                    passwordC.clear();
                   },
                 ),
 

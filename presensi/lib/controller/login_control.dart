@@ -104,3 +104,8 @@ Future<void> login() async {
         "Email & Password Required");
   }
 }
+
+void logOut() {
+  auth.signOut();
+  Get.offAllNamed(RouteName.login);
+}

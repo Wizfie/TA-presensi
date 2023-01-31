@@ -21,7 +21,8 @@ void resetPassword() async {
           backgroundColor: Colors.grey.shade500,
           "Success",
           "Check your email");
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
       Get.snackbar(
           margin: const EdgeInsets.only(top: 10, left: 40, right: 40),
           backgroundColor: Colors.grey.shade500,

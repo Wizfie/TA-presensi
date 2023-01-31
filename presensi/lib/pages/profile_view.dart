@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi/controller/login_control.dart';
 import 'package:presensi/controller/profile_control.dart';
 
 import '../routes/route.dart';
@@ -84,8 +85,7 @@ class UserProfile extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     {
-                      auth.signOut();
-                      Get.offAllNamed(RouteName.login);
+                      logOut();
                     }
 
                     ///
