@@ -83,9 +83,15 @@ Future<void> login() async {
         Get.snackbar(
             margin: const EdgeInsets.only(top: 10, left: 40, right: 40),
             backgroundColor: Colors.grey.shade500,
-            "Error",
+            "Warning",
             "Wrong Password ");
         // print('Wrong password provided for that user.');
+      } else {
+        Get.snackbar(
+            margin: const EdgeInsets.only(top: 10, left: 40, right: 40),
+            backgroundColor: Colors.grey.shade500,
+            "Warning",
+            "Please Input Email Corectly ");
       }
     } catch (e) {
       isLoading.value = false;

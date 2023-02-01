@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, unused_local_variable
+// ignore_for_file: must_be_immutable, unused_local_variable, sized_box_for_whitespace
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -33,13 +33,33 @@ class UserProfile extends StatelessWidget {
             return ListView(
               padding: const EdgeInsets.all(20),
               children: [
-                InkWell(
-                  onTap: () {
-                    //
-                  },
-                  child: const CircleAvatar(
-                    radius: 50,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipOval(
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        child: Image.network(
+                          "https://ui-avatars.com/api/?name=${user['name']}",
+                          fit: BoxFit.cover,
+                          // color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 170, right: 170),
+                  child: OutlinedButton.icon(
+                      style: const ButtonStyle(
+                          padding: MaterialStatePropertyAll(EdgeInsets.all(5)),
+                          fixedSize: MaterialStatePropertyAll(Size(20, 20))),
+                      onPressed: () {
+                        //
+                      },
+                      icon: const Icon(Icons.add_a_photo_outlined),
+                      label: const Text("Change Picture")),
                 ),
                 const SizedBox(
                   height: 15,
