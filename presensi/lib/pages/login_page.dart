@@ -1,15 +1,12 @@
 // ignore_for_file: use_build_context_synchronously, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:presensi/component/my_button.dart';
 import 'package:presensi/component/my_textfield.dart';
 import 'package:presensi/component/square_tile.dart';
-import 'package:presensi/controller/forgot_password_control.dart';
 import 'package:presensi/controller/login_control.dart';
 
-import '../routes/route.dart';
+import '../controller/forgot_password_control.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -71,8 +68,8 @@ class LoginPage extends StatelessWidget {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Get.toNamed(RouteName.resetP);
-                          // resetPassword();
+                          // Get.toNamed(RouteName.resetP);
+                          resetPassword();
                         },
                         child: const Text(
                           "Forgot password?",

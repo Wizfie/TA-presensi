@@ -59,7 +59,7 @@ void addSiswa() async {
     Get.snackbar(
         margin: const EdgeInsets.only(top: 10, left: 40, right: 40),
         backgroundColor: Colors.grey.shade500,
-        "Something Problems",
+        'Warning',
         'Field cannot empty',
         snackPosition: SnackPosition.TOP,
         colorText: Colors.black);
@@ -112,14 +112,14 @@ Future<void> createSiswa() async {
         Get.snackbar(
             margin: const EdgeInsets.only(top: 10, left: 40, right: 40),
             backgroundColor: Colors.grey.shade500,
-            "Something Problems",
+            'Warning',
             'Password must 6 character');
         // print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         Get.snackbar(
             margin: const EdgeInsets.only(top: 10, left: 40, right: 40),
             backgroundColor: Colors.grey.shade500,
-            "Something Problems",
+            'Warning',
             'Email already used');
         // print('The account already exists for that email.');
       } else if (e.code == 'wrong-password') {
@@ -139,7 +139,7 @@ Future<void> createSiswa() async {
       Get.snackbar(
           margin: const EdgeInsets.only(top: 10, left: 40, right: 40),
           backgroundColor: Colors.grey.shade500,
-          "Something Problems",
+          'Warning',
           'Try again');
     }
   } else {

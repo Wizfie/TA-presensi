@@ -6,7 +6,7 @@ import 'package:presensi/pages/form_profile.dart';
 import 'package:presensi/pages/home_admin.dart';
 import 'package:presensi/pages/login_page.dart';
 import 'package:presensi/pages/profile_view.dart';
-import 'package:presensi/pages/reset_password.dart';
+import 'package:presensi/pages/update_password.dart';
 import 'package:presensi/pages/update_profile.dart';
 
 class AppPage {
@@ -46,15 +46,18 @@ class AppPage {
       transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
-      name: RouteName.resetP,
-      page: () => const ResetPassword(),
+      name: RouteName.updatepassword,
+      page: () => const UpdatePassword(),
       middlewares: [MyMiddelware()],
       transition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
       name: RouteName.updateprofile,
-      page: () =>  UpdateProfile(),
+      page: () => UpdateProfile(),
+      // binding: BindingsBuilder(() {
+      //   Get.put(UpdateProfile());
+      // }),
       middlewares: [MyMiddelware()],
       transition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 500),
@@ -76,6 +79,6 @@ abstract class RouteName {
   static const profile = "/profile";
   static const addsiswa = "/addSiswa";
   static const form = "/form";
-  static const resetP = "/resetpassword";
+  static const updatepassword = "/updatepassword";
   static const updateprofile = "/updateprofile";
 }

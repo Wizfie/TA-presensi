@@ -24,7 +24,7 @@ class UserProfile extends StatelessWidget {
         stream: streamUser(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            const Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -77,7 +77,7 @@ class UserProfile extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    ///
+                    Get.toNamed(RouteName.updatepassword);
                   },
                   leading: const Icon(Icons.lock_reset_outlined),
                   title: const Text("Change Password"),
@@ -102,6 +102,9 @@ class UserProfile extends StatelessWidget {
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
                   const CircularProgressIndicator(),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   const Text("Loading...")
                 ],
               ),

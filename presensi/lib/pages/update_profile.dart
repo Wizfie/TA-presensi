@@ -1,20 +1,21 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi/controller/update_profile_control.dart';
 
 class UpdateProfile extends StatelessWidget {
-  final controller = Get.put(UpdateProfileController(String));
+  // final UpdateProfile = Get.find<UpdateProfile>();
+  UpdateProfile({super.key});
 
   Map<String, dynamic> user = Get.arguments;
 
-  UpdateProfile({super.key});
   @override
   Widget build(BuildContext context) {
-    controller.updateNim.text = user['nim'];
-    controller.updateName.text = user['name'];
-    controller.updateEmail.text = user['email'];
+    // print(user);
+    updateNim.text = user['nim'];
+    updateName.text = user['name'];
+    updateEmail.text = user['email'];
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -27,7 +28,8 @@ class UpdateProfile extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         children: [
           TextField(
-            controller: controller.updateNim,
+            readOnly: true,
+            controller: updateNim,
             // ignore: prefer_const_constructors
             decoration: const InputDecoration(
                 labelText: 'Nim', border: OutlineInputBorder()),
@@ -36,7 +38,7 @@ class UpdateProfile extends StatelessWidget {
             height: 20,
           ),
           TextField(
-            controller: controller.updateName,
+            controller: updateName,
             decoration: const InputDecoration(
                 labelText: 'Name', border: OutlineInputBorder()),
           ),
@@ -44,7 +46,8 @@ class UpdateProfile extends StatelessWidget {
             height: 20,
           ),
           TextField(
-            controller: controller.updateEmail,
+            readOnly: true,
+            controller: updateEmail,
             decoration: const InputDecoration(
                 labelText: 'Email', border: OutlineInputBorder()),
           ),
@@ -53,7 +56,8 @@ class UpdateProfile extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              //
+              updateProfile(user['uid']);
+              print("Clik");
             },
             child: Container(
               height: 50,

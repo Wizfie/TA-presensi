@@ -1,43 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi/controller/forgot_password_control.dart';
+import 'package:presensi/controller/update_password.dart';
 
-class ResetPassword extends StatelessWidget {
-  const ResetPassword({super.key});
+class UpdatePassword extends StatelessWidget {
+  const UpdatePassword({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        // leading: IconButton(
-        //   onPressed: () {
-        //     Get.back();
-        //   },
-        //   icon: Icon(Icons.arrow_back_ios_new),
-        // ),
-        // automaticallyImplyLeading: false,
         backgroundColor: Colors.grey[900],
-        title: const Text('Reset password'),
+        title: const Text('Change password'),
         centerTitle: true,
       ),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
           TextField(
-            controller: emailReset,
-            // ignore: prefer_const_constructors
+            controller: currPass,
             decoration: const InputDecoration(
-                labelText: 'Email', border: OutlineInputBorder()),
+                labelText: 'Current Password', border: OutlineInputBorder()),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
+          ),
+          TextField(
+            controller: newPass,
+            decoration: const InputDecoration(
+                labelText: 'New Password', border: OutlineInputBorder()),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextField(
+            controller: rePass,
+            decoration: const InputDecoration(
+                labelText: ' Re-Password', border: OutlineInputBorder()),
+          ),
+          const SizedBox(
+            height: 10,
           ),
           Obx(
             () => GestureDetector(
               onTap: () {
                 if (isLoading.isFalse) {
-                  resetPassword();
+                  updatePassword();
                 }
               },
               child: Container(
@@ -45,7 +53,7 @@ class ResetPassword extends StatelessWidget {
                 color: Colors.black,
                 alignment: Alignment.center,
                 child: Text(
-                  isLoading.isFalse ? "Send Email Reset" : "Loading...",
+                  isLoading.isFalse ? "Update" : "Updating...",
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
