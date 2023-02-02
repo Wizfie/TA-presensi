@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, avoid_unnecessary_containers
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -35,4 +35,25 @@ void updateProfile(String uid) async {
   } else {
     print("gagal");
   }
+}
+
+void updatePict() {
+  //
+  Get.defaultDialog(
+      title: 'Choose Image',
+      content: ElevatedButton(
+          onPressed: () {},
+          child: Container(
+            margin: const EdgeInsets.only(left: 25),
+            // padding: const EdgeInsets.only(left: 30, right: 40),
+            child: Row(
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                const Icon(Icons.upload),
+                const Text(
+                  '       upload image',
+                )
+              ],
+            ),
+          )));
 }

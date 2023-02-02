@@ -1,10 +1,11 @@
-// ignore_for_file: must_be_immutable, unused_local_variable, sized_box_for_whitespace
+// ignore_for_file: must_be_immutable, unused_local_variable, sized_box_for_whitespace, unnecessary_string_interpolations
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi/controller/login_control.dart';
 import 'package:presensi/controller/profile_control.dart';
+import 'package:presensi/controller/update_profile_control.dart';
 
 import '../routes/route.dart';
 
@@ -34,52 +35,70 @@ class UserProfile extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ClipOval(
                       child: Container(
                         height: 100,
                         width: 100,
                         child: Image.network(
-                          "https://ui-avatars.com/api/?name=${user['name']}",
+                          user['profile'] != null && user['profile'] != ""
+                              ? user['profile']
+                              : "https://ui-avatars.com/api/?name=${user['name']}",
                           fit: BoxFit.cover,
-                          // color: Colors.red,
                         ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 50, top: 10),
+                      child: Column(
+                        children: [
+                          Text(
+                            "${user['name']}",
+                            style: const TextStyle(fontSize: 20, height: 2.5),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "${user['email']}",
+                            style: const TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 170, right: 170),
-                  child: OutlinedButton.icon(
-                      style: const ButtonStyle(
-                          padding: MaterialStatePropertyAll(EdgeInsets.all(5)),
-                          fixedSize: MaterialStatePropertyAll(Size(20, 20))),
-                      onPressed: () {
-                        //
-                      },
-                      icon: const Icon(Icons.add_a_photo_outlined),
-                      label: const Text("Change Picture")),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  "${user['name']}",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
                 const SizedBox(
                   height: 5,
                 ),
-                Text(
-                  "${user['email']}",
-                  style: const TextStyle(
-                    fontSize: 15,
-                  ),
-                  textAlign: TextAlign.center,
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 370),
+                  child: OutlinedButton.icon(
+                      style: const ButtonStyle(
+                          padding: MaterialStatePropertyAll(EdgeInsets.all(1)),
+                          fixedSize: MaterialStatePropertyAll(Size(15, 15))),
+                      onPressed: () {
+                        //
+                        updatePict();
+                      },
+                      icon: const Icon(
+                        Icons.add_a_photo_outlined,
+                        size: 13,
+                        color: Colors.black,
+                      ),
+                      label: const Text(
+                        " Change",
+                        style: TextStyle(color: Colors.black, fontSize: 13),
+                      )),
+                ),
+                const Divider(
+                  thickness: 0.5,
+                ),
+                const SizedBox(
+                  height: 15,
                 ),
                 const SizedBox(
                   height: 30,
