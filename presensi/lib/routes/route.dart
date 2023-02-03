@@ -26,7 +26,7 @@ class AppPage {
     ),
     GetPage(
       name: RouteName.profile,
-      page: () => const UserProfile(),
+      page: () => UserProfile(),
       middlewares: [MyMiddelware()],
       transition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 500),

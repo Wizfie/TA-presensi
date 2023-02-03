@@ -10,7 +10,7 @@ import 'package:presensi/controller/update_profile_control.dart';
 import '../routes/route.dart';
 
 class UserProfile extends StatelessWidget {
-  const UserProfile({super.key});
+  UserProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +31,13 @@ class UserProfile extends StatelessWidget {
           }
           if (snapshot.hasData) {
             Map<String, dynamic> user = snapshot.data!.data()!;
+            String profileImage =
+                "https://ui-avatars.com/api/?name=${user['name']}";
+
+            String gambar =
+                "https://firebasestorage.googleapis.com/v0/b/presensi-26273.appspot.com/o/a.png?alt=media&token=18b00bef-065d-4003-ac11-948efa0346a4";
+            print('aaaaa');
+            print("${user['name']}");
             return ListView(
               padding: const EdgeInsets.all(20),
               children: [
@@ -41,12 +48,22 @@ class UserProfile extends StatelessWidget {
                       child: Container(
                         height: 100,
                         width: 100,
-                        child: Image.network(
-                          user['profile'] != null && user['profile'] != ""
-                              ? user['profile']
-                              : "https://ui-avatars.com/api/?name=${user['name']}",
-                          fit: BoxFit.cover,
-                        ),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  // "${user['aa']}",
+                                  gambar,
+                                ))),
+                        // child: Image.network(
+                        //   "${user['role']}",
+                        //   // user["profile"],
+                        //   // != ""
+                        //   //     ? user['profile']
+                        //   //     : profileImage,
+                        //   // : profileImage,
+                        //   fit: BoxFit.cover,
+                        // ),
                       ),
                     ),
                     Container(
@@ -55,7 +72,10 @@ class UserProfile extends StatelessWidget {
                         children: [
                           Text(
                             "${user['name']}",
-                            style: const TextStyle(fontSize: 20, height: 2.5),
+                            style: const TextStyle(
+                                fontSize: 20,
+                                height: 2.5,
+                                fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             height: 10,
@@ -66,16 +86,23 @@ class UserProfile extends StatelessWidget {
                               fontSize: 15,
                             ),
                           ),
+                          Text(
+                            "${user['role']}",
+                            style: const TextStyle(
+                              height: 3,
+                              fontSize: 10,
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(
-                  height: 5,
+                  height: 7,
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 10, right: 370),
+                  // margin: const EdgeInsets.only(left: 0, right: 280),
                   child: OutlinedButton.icon(
                       style: const ButtonStyle(
                           padding: MaterialStatePropertyAll(EdgeInsets.all(1)),
