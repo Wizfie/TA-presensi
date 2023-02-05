@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "331457221450",
-    "project_id": "presensi-26273",
-    "storage_bucket": "presensi-26273.appspot.com"
+    "project_number": "688754486380",
+    "project_id": "presensiapp-6a5e8",
+    "storage_bucket": "presensiapp-6a5e8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:331457221450:android:ad6241b105fe0c7797e7b3",
+        "mobilesdk_app_id": "1:688754486380:android:28efa660dfb51a47c63c49",
         "android_client_info": {
           "package_name": "com.example.presensi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "331457221450-j03vfq0i9dds5ij5c4qetc88gsdf1ld2.apps.googleusercontent.com",
+          "client_id": "688754486380-rcsdk03kafvf6vfp1v09u8n5e7tj4ji4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6nLZ951gB_uSeiBLD2n2hPZ9UUMa5rBk"
+          "current_key": "AIzaSyB6RsZhlemxagEX0wYuMhK9uybyowlTKBY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "331457221450-j03vfq0i9dds5ij5c4qetc88gsdf1ld2.apps.googleusercontent.com",
+              "client_id": "688754486380-rcsdk03kafvf6vfp1v09u8n5e7tj4ji4.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "331457221450-gaqkinjv1ia7acf7ktt725i72e7qkf3q.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.presensi"
-              }
             }
           ]
         }

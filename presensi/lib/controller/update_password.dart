@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi/controller/profile_control.dart';
+import 'package:presensi/controller/stream_user.dart';
 
 RxBool isLoading = false.obs;
 TextEditingController currPass = TextEditingController();

@@ -1,21 +1,22 @@
-// ignore_for_file: must_be_immutable, unused_local_variable, sized_box_for_whitespace, unnecessary_string_interpolations
+// ignore_for_file: must_be_immutable, unused_local_variable, sized_box_for_whitespace, unnecessary_string_interpolations, avoid_unnecessary_containers, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi/controller/bottom_control.dart';
 import 'package:presensi/controller/login_control.dart';
-import 'package:presensi/controller/profile_control.dart';
-import 'package:presensi/controller/update_profile_control.dart';
+import 'package:presensi/controller/stream_user.dart';
 
 import '../routes/route.dart';
 
 class UserProfile extends StatelessWidget {
-  UserProfile({super.key});
+  const UserProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
         title: const Text('Profile'),
@@ -34,41 +35,28 @@ class UserProfile extends StatelessWidget {
             String profileImage =
                 "https://ui-avatars.com/api/?name=${user['name']}";
 
-            String gambar =
-                "https://firebasestorage.googleapis.com/v0/b/presensi-26273.appspot.com/o/a.png?alt=media&token=18b00bef-065d-4003-ac11-948efa0346a4";
-            print('aaaaa');
-            print("${user['name']}");
+            // String gambar =
+            //     "https://firebasestorage.googleapis.com/v0/b/presensiapp-6a5e8.appspot.com/o/Screenshot%202023-01-08%20174754.png?alt=media&token=e6661610-3612-441e-bc7f-e20c7c086787";
             return ListView(
               padding: const EdgeInsets.all(20),
               children: [
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ClipOval(
                       child: Container(
-                        height: 100,
                         width: 100,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                  // "${user['aa']}",
-                                  gambar,
-                                ))),
-                        // child: Image.network(
-                        //   "${user['role']}",
-                        //   // user["profile"],
-                        //   // != ""
-                        //   //     ? user['profile']
-                        //   //     : profileImage,
-                        //   // : profileImage,
-                        //   fit: BoxFit.cover,
-                        // ),
+                        height: 100,
+                        // color: Colors.grey[400],
+                        child: Image.network(
+                          profileImage,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 50, top: 10),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "${user['name']}",
@@ -101,40 +89,39 @@ class UserProfile extends StatelessWidget {
                 const SizedBox(
                   height: 7,
                 ),
-                Container(
-                  // margin: const EdgeInsets.only(left: 0, right: 280),
-                  child: OutlinedButton.icon(
-                      style: const ButtonStyle(
-                          padding: MaterialStatePropertyAll(EdgeInsets.all(1)),
-                          fixedSize: MaterialStatePropertyAll(Size(15, 15))),
-                      onPressed: () {
-                        //
-                        updatePict();
-                      },
-                      icon: const Icon(
-                        Icons.add_a_photo_outlined,
-                        size: 13,
-                        color: Colors.black,
-                      ),
-                      label: const Text(
-                        " Change",
-                        style: TextStyle(color: Colors.black, fontSize: 13),
-                      )),
-                ),
+                // Container(
+                //   // margin: const EdgeInsets.only(left: 0, right: 280),
+                //   child: OutlinedButton.icon(
+                //       style: const ButtonStyle(
+                //           padding: MaterialStatePropertyAll(EdgeInsets.all(1)),
+                //           fixedSize: MaterialStatePropertyAll(Size(15, 15))),
+                //       onPressed: () {
+                //         //
+                //         updatePict();
+                //       },
+                //       icon: const Icon(
+                //         Icons.add_a_photo_outlined,
+                //         size: 13,
+                //         color: Colors.black,
+                //       ),
+                //       label: const Text(
+                //         " Change",
+                //         style: TextStyle(color: Colors.black, fontSize: 13),
+                //       )),
+                // ),
                 const Divider(
-                  thickness: 0.5,
+                  thickness: 1,
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 45,
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                ListTile(
-                  onTap: () => Get.toNamed(RouteName.addsiswa),
-                  leading: const Icon(Icons.person_add_alt_1),
-                  title: const Text("Add Siswa"),
-                ),
+
+                if (user["role"] == "admin")
+                  ListTile(
+                    onTap: () => Get.toNamed(RouteName.addsiswa),
+                    leading: const Icon(Icons.person_add_alt_1),
+                    title: const Text("Add Siswa"),
+                  ),
                 ListTile(
                   onTap: () =>
                       Get.toNamed(RouteName.updateprofile, arguments: user),
@@ -169,14 +156,25 @@ class UserProfile extends StatelessWidget {
                 children: [
                   const CircularProgressIndicator(),
                   const SizedBox(
-                    height: 10,
+                    width: 10,
                   ),
-                  const Text("Loading...")
+                  const Text("Data Tidak Ada ...")
                 ],
               ),
             );
           }
         },
+      ),
+      bottomNavigationBar: ConvexAppBar(
+        backgroundColor: Colors.black,
+        top: -10,
+        initialActiveIndex: index.value = 2,
+        items: const [
+          TabItem(icon: Icons.home, title: 'Home'),
+          TabItem(icon: Icons.fingerprint_outlined, title: 'Attedance'),
+          TabItem(icon: Icons.people, title: 'Profile'),
+        ],
+        onTap: (int i) => changeIndex(i),
       ),
     );
   }

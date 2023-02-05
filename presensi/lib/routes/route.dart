@@ -3,7 +3,7 @@
 import 'package:get/get.dart';
 import 'package:presensi/pages/add_siswa.dart';
 import 'package:presensi/pages/form_profile.dart';
-import 'package:presensi/pages/home_admin.dart';
+import 'package:presensi/pages/home_view.dart';
 import 'package:presensi/pages/login_page.dart';
 import 'package:presensi/pages/profile_view.dart';
 import 'package:presensi/pages/update_password.dart';
@@ -15,42 +15,42 @@ class AppPage {
       name: RouteName.login,
       page: () => const LoginPage(),
       transition: Transition.leftToRightWithFade,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: RouteName.admin,
       page: () => HomeAdmin(),
       middlewares: [MyMiddelware()],
-      transition: Transition.leftToRightWithFade,
-      transitionDuration: const Duration(milliseconds: 500),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: RouteName.profile,
-      page: () => UserProfile(),
+      page: () => const UserProfile(),
+      transition: Transition.fadeIn,
       middlewares: [MyMiddelware()],
-      transition: Transition.leftToRightWithFade,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: RouteName.addsiswa,
       page: () => const AddSiswa(),
       middlewares: [MyMiddelware()],
       transition: Transition.leftToRightWithFade,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: RouteName.form,
       page: () => const FormProfile(),
       middlewares: [MyMiddelware()],
       transition: Transition.leftToRightWithFade,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: RouteName.updatepassword,
       page: () => const UpdatePassword(),
       middlewares: [MyMiddelware()],
       transition: Transition.leftToRightWithFade,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: RouteName.updateprofile,
@@ -60,7 +60,7 @@ class AppPage {
       // }),
       middlewares: [MyMiddelware()],
       transition: Transition.leftToRightWithFade,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 400),
     ),
   ];
 }

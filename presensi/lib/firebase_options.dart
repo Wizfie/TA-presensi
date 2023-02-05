@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCLn2naAJakmTVwjtK9CdxJ8McnG8EeehY',
-    appId: '1:331457221450:web:c502801a19e3c16a97e7b3',
-    messagingSenderId: '331457221450',
-    projectId: 'presensi-26273',
-    authDomain: 'presensi-26273.firebaseapp.com',
-    storageBucket: 'presensi-26273.appspot.com',
+    apiKey: 'AIzaSyC1kLM-z0OVtE91J9pks7GoKY8Bexf-QF0',
+    appId: '1:688754486380:web:20b4f2e4f225c4a4c63c49',
+    messagingSenderId: '688754486380',
+    projectId: 'presensiapp-6a5e8',
+    authDomain: 'presensiapp-6a5e8.firebaseapp.com',
+    storageBucket: 'presensiapp-6a5e8.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC6nLZ951gB_uSeiBLD2n2hPZ9UUMa5rBk',
-    appId: '1:331457221450:android:ad6241b105fe0c7797e7b3',
-    messagingSenderId: '331457221450',
-    projectId: 'presensi-26273',
-    storageBucket: 'presensi-26273.appspot.com',
+    apiKey: 'AIzaSyB6RsZhlemxagEX0wYuMhK9uybyowlTKBY',
+    appId: '1:688754486380:android:28efa660dfb51a47c63c49',
+    messagingSenderId: '688754486380',
+    projectId: 'presensiapp-6a5e8',
+    storageBucket: 'presensiapp-6a5e8.appspot.com',
   );
 }
