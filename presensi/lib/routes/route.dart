@@ -2,12 +2,15 @@
 
 import 'package:get/get.dart';
 import 'package:presensi/pages/add_siswa.dart';
+import 'package:presensi/pages/all_details_presence.dart';
 import 'package:presensi/pages/form_profile.dart';
 import 'package:presensi/pages/home_view.dart';
 import 'package:presensi/pages/login_page.dart';
 import 'package:presensi/pages/profile_view.dart';
 import 'package:presensi/pages/update_password.dart';
 import 'package:presensi/pages/update_profile.dart';
+
+import '../pages/details_presence.dart';
 
 class AppPage {
   static final pages = [
@@ -55,11 +58,22 @@ class AppPage {
     GetPage(
       name: RouteName.updateprofile,
       page: () => UpdateProfile(),
-      // binding: BindingsBuilder(() {
-      //   Get.put(UpdateProfile());
-      // }),
       middlewares: [MyMiddelware()],
       transition: Transition.leftToRightWithFade,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: RouteName.detailP,
+      page: () => DetailPresence(),
+      middlewares: [MyMiddelware()],
+      transition: Transition.zoom,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: RouteName.allDetail,
+      page: () => AllDetail(),
+      middlewares: [MyMiddelware()],
+      transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
   ];
@@ -81,4 +95,6 @@ abstract class RouteName {
   static const form = "/form";
   static const updatepassword = "/updatepassword";
   static const updateprofile = "/updateprofile";
+  static const detailP = "/detail";
+  static const allDetail = "/allDetail";
 }

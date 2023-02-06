@@ -4,9 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:presensi/controller/bottom_control.dart';
 import 'package:presensi/controller/stream_user.dart';
+import 'package:presensi/routes/route.dart';
 
 class HomeAdmin extends StatelessWidget {
   HomeAdmin({super.key});
@@ -98,13 +100,6 @@ class HomeAdmin extends StatelessWidget {
                                         style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400)),
-                                    // const SizedBox(
-                                    //   height: 5,
-                                    // ),
-                                    // Text("${user['role']}",
-                                    //     style: const TextStyle(
-                                    //         fontSize: 12,
-                                    //         fontWeight: FontWeight.w400))
                                   ],
                                 ),
                               ),
@@ -267,6 +262,7 @@ class HomeAdmin extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             //
+                            Get.toNamed(RouteName.allDetail);
                           },
                           child: const Text(
                             "See more...",
@@ -284,59 +280,68 @@ class HomeAdmin extends StatelessWidget {
                     ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: 5,
+                      itemCount: 3,
                       itemBuilder: (context, index) {
                         return SingleChildScrollView(
-                          child: Container(
-                            height: 130,
-                            margin: const EdgeInsets.only(bottom: 10),
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: warna[0],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      "IN :",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                        "${DateFormat.yMEd().format(DateTime.now())}"),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                    "${DateFormat.Hms().format(DateTime.now())}"),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: const [
-                                    Text(
-                                      "OUT :",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text("Present")
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                    "${DateFormat.Hms().format(DateTime.now())}"),
-                              ],
+                          child: InkWell(
+                            onTap: () {
+                              //aksi
+                              Get.toNamed(
+                                RouteName.detailP,
+                              );
+                              print(index);
+                            },
+                            child: Container(
+                              height: 130,
+                              margin: const EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: warna[0],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text(
+                                        "IN :",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                          "${DateFormat.yMEd().format(DateTime.now())}"),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                      "${DateFormat.Hms().format(DateTime.now())}"),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: const [
+                                      Text(
+                                        "OUT :",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text("Present")
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                      "${DateFormat.Hms().format(DateTime.now())}"),
+                                ],
+                              ),
                             ),
                           ),
                         );
