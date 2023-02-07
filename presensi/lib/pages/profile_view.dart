@@ -23,7 +23,7 @@ class UserProfile extends StatelessWidget {
         centerTitle: true,
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: streamUser(),
+        stream: streamCollect1(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -89,26 +89,6 @@ class UserProfile extends StatelessWidget {
                 const SizedBox(
                   height: 7,
                 ),
-                // Container(
-                //   // margin: const EdgeInsets.only(left: 0, right: 280),
-                //   child: OutlinedButton.icon(
-                //       style: const ButtonStyle(
-                //           padding: MaterialStatePropertyAll(EdgeInsets.all(1)),
-                //           fixedSize: MaterialStatePropertyAll(Size(15, 15))),
-                //       onPressed: () {
-                //         //
-                //         updatePict();
-                //       },
-                //       icon: const Icon(
-                //         Icons.add_a_photo_outlined,
-                //         size: 13,
-                //         color: Colors.black,
-                //       ),
-                //       label: const Text(
-                //         " Change",
-                //         style: TextStyle(color: Colors.black, fontSize: 13),
-                //       )),
-                // ),
                 const Divider(
                   thickness: 1,
                 ),
