@@ -109,6 +109,40 @@ class HomeAdmin extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blue),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: ListTile(
+                                leading: const Icon(
+                                  Icons.location_on,
+                                  size: 40,
+                                ),
+                                title: const Text(
+                                  "Location",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(
+                                  user['address'] ?? "Location not avaliable",
+                                  style: const TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
