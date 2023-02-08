@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, avoid_print, sized_box_for_whitespace, unnecessary_string_interpolations
+// ignore_for_file: must_be_immutable, avoid_print, sized_box_for_whitespace, unnecessary_string_interpolations, prefer_is_empty
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -111,172 +111,205 @@ class HomeAdmin extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: ListTile(
-                              leading: const Icon(
-                                Icons.location_on,
-                                size: 40,
-                              ),
-                              title: const Text(
-                                "Location",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                              subtitle: Text(
-                                user['address'] ?? "Location not avaliable",
-                                style: const TextStyle(fontSize: 15),
-                              )),
-                        ),
-                      ],
+                  if (user['role'] != "admin")
+                    Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blue),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: ListTile(
+                                leading: const Icon(
+                                  Icons.location_on,
+                                  size: 40,
+                                ),
+                                title: const Text(
+                                  "Location",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(
+                                  user['address'] ?? "Location not avaliable",
+                                  style: const TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            if (constraints.maxWidth > 600) {
-                              return Container(
-                                decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 190, 190, 190),
-                                    borderRadius: BorderRadiusDirectional.all(
-                                      Radius.circular(20),
-                                    )),
-                                height: 100,
-                                width: constraints.maxWidth / 2,
-                                child: Column(
-                                  children: const [
-                                    Center(
-                                      child: Text(
-                                        "IN",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                  StreamBuilder(
+                      stream: streamDoc(),
+                      builder: (context, snapshot3) {
+                        if (snapshot3.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        Map<String, dynamic>? todayAtt = snapshot3.data!.data();
+                        return Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  if (constraints.maxWidth > 600) {
+                                    return Container(
+                                      decoration: const BoxDecoration(
+                                          color: Color.fromARGB(
+                                              255, 190, 190, 190),
+                                          borderRadius:
+                                              BorderRadiusDirectional.all(
+                                            Radius.circular(20),
+                                          )),
+                                      height: 100,
+                                      width: constraints.maxWidth / 2,
+                                      child: Column(
+                                        children: [
+                                          const Center(
+                                            child: Text(
+                                              "IN",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Center(
+                                            child: Text(todayAtt?['In'] == null
+                                                ? "-,-"
+                                                : "${DateFormat.jm().format(DateTime.parse(todayAtt!['In']['date']))}"),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Center(
-                                      child: Text("Container 1"),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            } else {
-                              return Container(
-                                decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 190, 190, 190),
-                                    borderRadius: BorderRadiusDirectional.all(
-                                      Radius.circular(20),
-                                    )),
-                                height: 100,
-                                width: constraints.maxWidth,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: const [
-                                    Center(
-                                      child: Text(
-                                        "IN",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                    );
+                                  } else {
+                                    return Container(
+                                      decoration: const BoxDecoration(
+                                          color: Color.fromARGB(
+                                              255, 190, 190, 190),
+                                          borderRadius:
+                                              BorderRadiusDirectional.all(
+                                            Radius.circular(20),
+                                          )),
+                                      height: 100,
+                                      width: constraints.maxWidth,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const Center(
+                                            child: Text(
+                                              "IN",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Center(
+                                            child: Text(todayAtt?['In'] == null
+                                                ? "-,-"
+                                                : "${DateFormat.jm().format(DateTime.parse(todayAtt!['In']['date']))}"),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Center(
-                                      child: Text("Container 1"),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Expanded(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            if (constraints.maxWidth > 600) {
-                              return Container(
-                                decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 190, 190, 190),
-                                    borderRadius: BorderRadiusDirectional.all(
-                                      Radius.circular(20),
-                                    )),
-                                height: 100,
-                                width: constraints.maxWidth / 2,
-                                child: Column(
-                                  children: const [
-                                    Center(
-                                      child: Text(
-                                        "IN",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Expanded(
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  if (constraints.maxWidth > 600) {
+                                    return Container(
+                                      decoration: const BoxDecoration(
+                                          color: Color.fromARGB(
+                                              255, 190, 190, 190),
+                                          borderRadius:
+                                              BorderRadiusDirectional.all(
+                                            Radius.circular(20),
+                                          )),
+                                      height: 100,
+                                      width: constraints.maxWidth / 2,
+                                      child: Column(
+                                        children: [
+                                          const Center(
+                                            child: Text(
+                                              "OUT",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Center(
+                                            child: Text(todayAtt?['Out'] == null
+                                                ? "-,-"
+                                                : "${DateFormat.jm().format(DateTime.parse(todayAtt!['Out']['date']))}"),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Center(
-                                      child: Text("Container 1"),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            } else {
-                              return Container(
-                                decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 190, 190, 190),
-                                    borderRadius: BorderRadiusDirectional.all(
-                                      Radius.circular(20),
-                                    )),
-                                height: 100,
-                                width: constraints.maxWidth,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: const [
-                                    Center(
-                                      child: Text(
-                                        "OUT",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                    );
+                                  } else {
+                                    return Container(
+                                      decoration: const BoxDecoration(
+                                          color: Color.fromARGB(
+                                              255, 190, 190, 190),
+                                          borderRadius:
+                                              BorderRadiusDirectional.all(
+                                            Radius.circular(20),
+                                          )),
+                                      height: 100,
+                                      width: constraints.maxWidth,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const Center(
+                                            child: Text(
+                                              "OUT",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Center(
+                                            child: Text(todayAtt?['Out'] == null
+                                                ? "-,-"
+                                                : "${DateFormat.jm().format(DateTime.parse(todayAtt!['In']['date']))}"),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Center(
-                                      child: Text("Container 1"),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
                   const SizedBox(
                     height: 10,
                   ),
@@ -330,15 +363,15 @@ class HomeAdmin extends StatelessWidget {
                       return ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: 3,
+                        itemCount: snapshot2.data!.docs.length,
                         itemBuilder: (context, index) {
+                          Map<String, dynamic> data =
+                              snapshot2.data!.docs[index].data();
                           return SingleChildScrollView(
                             child: InkWell(
                               onTap: () {
                                 //aksi
-                                Get.toNamed(
-                                  RouteName.detailP,
-                                );
+                                Get.toNamed(RouteName.detailP, arguments: data);
                                 print(index);
                               },
                               child: Container(
@@ -362,14 +395,15 @@ class HomeAdmin extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                            "${DateFormat.yMEd().format(DateTime.now())}"),
+                                            "${DateFormat.yMEd().format(DateTime.parse(data['date']))}"),
                                       ],
                                     ),
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    Text(
-                                        "${DateFormat.Hms().format(DateTime.now())}"),
+                                    Text(data['In']?['date'] == null
+                                        ? "-.-"
+                                        : "${DateFormat.Hms().format(DateTime.parse(data['In']!['date']))}"),
                                     const SizedBox(
                                       height: 10,
                                     ),
@@ -388,8 +422,9 @@ class HomeAdmin extends StatelessWidget {
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    Text(
-                                        "${DateFormat.Hms().format(DateTime.now())}"),
+                                    Text(data['Out']?['date'] == null
+                                        ? "-.-"
+                                        : "${DateFormat.Hms().format(DateTime.parse(data['Out']!['date']))}"),
                                   ],
                                 ),
                               ),

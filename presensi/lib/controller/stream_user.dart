@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 RxBool isloading = true.obs;
 
@@ -20,7 +21,21 @@ Stream<QuerySnapshot<Map<String, dynamic>>> streamCollect2() async* {
       .collection("siswa")
       .doc(uid)
       .collection('presence')
-      .orderBy('date')
+      .orderBy('date', descending: true)
       .limitToLast(3)
+      .snapshots();
+}
+
+Stream<DocumentSnapshot<Map<String, dynamic>>> streamDoc() async* {
+  String uid = auth.currentUser!.uid;
+
+  String todayUid =
+      DateFormat.yMd().format(DateTime.now()).replaceAll("/", "-");
+
+  yield* firestore
+      .collection("siswa")
+      .doc(uid)
+      .collection('presence')
+      .doc(todayUid)
       .snapshots();
 }

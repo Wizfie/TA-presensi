@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class DetailPresence extends StatelessWidget {
@@ -10,6 +11,8 @@ class DetailPresence extends StatelessWidget {
     const Color.fromARGB(255, 190, 190, 190),
     const Color.fromARGB(255, 32, 167, 245)
   ];
+
+  Map<String, dynamic> data = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -21,25 +24,17 @@ class DetailPresence extends StatelessWidget {
         backgroundColor: Colors.grey[900],
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(20),
-            //   child: Container(
-            //     padding: const EdgeInsets.all(20),
-            //     height: 50,
-            //     color: Colors.amber,
-            //   ),
-            // ),
-            ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.all(20),
-              shrinkWrap: true,
-              itemCount: 1,
-              itemBuilder: (context, index) {
-                return SingleChildScrollView(
-                  child: Container(
-                    height: 240,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(20),
+                shrinkWrap: true,
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 400,
                     margin: const EdgeInsets.only(bottom: 10),
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -54,80 +49,168 @@ class DetailPresence extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "${DateFormat.yMMMMEEEEd().format(DateTime.now())}",
+                              "${DateFormat.yMMMMEEEEd().format(DateTime.parse(data['date']))}",
                             ),
                           ],
                         ),
                         const Divider(
                           thickness: 2,
                         ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Column(
                           children: [
                             Column(
                               children: [
                                 ListTile(
-                                  leading: const Icon(
-                                    Icons.circle,
+                                  leading: Container(
+                                    height: 200,
+                                    width: 15,
                                     color: Colors.green,
                                   ),
                                   title: const Padding(
                                     padding: EdgeInsets.only(bottom: 5),
-                                    child: Text("IN :"),
+                                    child: Text(
+                                      "IN :",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                   subtitle: Padding(
                                     padding: const EdgeInsets.only(bottom: 3),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: const [
+                                      children: [
                                         Padding(
-                                          padding: EdgeInsets.only(bottom: 3),
-                                          child: Text("Time"),
+                                          padding:
+                                              const EdgeInsets.only(bottom: 3),
+                                          child: Text(
+                                              "Time : ${DateFormat.jms().format(DateTime.parse(data['In']["date"]))}"),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.only(bottom: 3),
-                                          child: Text("Location"),
+                                          padding:
+                                              const EdgeInsets.only(bottom: 3),
+                                          child: Text(
+                                            "Location : ${data['In']!['Lat']},${data['In']!['long']}",
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 3),
+                                          child: Text(
+                                            "Address : ${data['In']!['address']}",
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 3),
+                                          child: Text(
+                                            "Status : ${data['In']!['status']}",
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 3),
+                                          child: Text(
+                                            "Distance : ${data['In']!['distance'].toString().split(".").first} Meter",
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  trailing: const Padding(
-                                    padding: EdgeInsets.only(top: 10),
-                                    child: Text("Telat"),
+                                  // ignore: prefer_const_constructors
+                                  trailing: Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    // ignore: prefer_const_constructors
+                                    child: Text(
+                                      "Present",
+                                      // ignore: prefer_const_constructors
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 ),
                                 const Divider(
                                   thickness: 1,
                                 ),
                                 ListTile(
-                                  leading: const Icon(
-                                    Icons.circle,
+                                  leading: Container(
+                                    height: 200,
+                                    width: 15,
                                     color: Colors.red,
                                   ),
                                   title: const Padding(
                                     padding: EdgeInsets.only(bottom: 5),
-                                    child: Text("OUT :"),
+                                    child: Text(
+                                      "OUT :",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                   subtitle: Padding(
                                     padding: const EdgeInsets.only(bottom: 3),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: const [
+                                      children: [
                                         Padding(
-                                          padding: EdgeInsets.only(bottom: 3),
-                                          child: Text("Time"),
+                                          padding:
+                                              const EdgeInsets.only(bottom: 3),
+                                          child: Text(data['Out']?["date"] ==
+                                                  null
+                                              ? "-,-"
+                                              : "Time : ${DateFormat.jms().format(DateTime.parse(data['Out']["date"]))}"),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.only(bottom: 3),
-                                          child: Text("Location"),
+                                          padding:
+                                              const EdgeInsets.only(bottom: 3),
+                                          child: Text(
+                                            data['Out']?['Lat'] == null &&
+                                                    data['Out']?['long'] == null
+                                                ? "Location : --"
+                                                : "Location : ${data['Out']!['Lat']},${data['Out']!['long']}",
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 3),
+                                          child: Text(
+                                            data['Out']?['address'] == null
+                                                ? "Address : -,-"
+                                                : "Address : ${data['Out']!['address']}",
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 3),
+                                          child: Text(
+                                            data['Out']?['status'] == null
+                                                ? "Status : -,-"
+                                                : "Status : ${data['Out']!['status']}",
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 3),
+                                          child: Text(
+                                            data['Out']?['distance'] == null
+                                                ? "Distance : -,-"
+                                                : "Distance : ${data['Out']!['distance']}",
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
                                   trailing: const Padding(
                                     padding: EdgeInsets.only(top: 10),
-                                    child: Text("Pulang"),
+                                    child: Text(
+                                      "Go Home",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -136,11 +219,11 @@ class DetailPresence extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                );
-              },
-            ),
-          ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

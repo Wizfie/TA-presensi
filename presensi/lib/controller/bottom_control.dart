@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ List<double> politeknik = [-6.1929811, 106.5690568];
 List<double> musholapoltek = [-6.1929884, 106.5690719];
 List<double> musholaRumah = [-6.2023946, 106.5334841];
 
-String status = "outside the coverage area";
+String status = "outside area";
 // String Ket = "07";
 
 void changeIndex(int i) async {
@@ -82,25 +83,43 @@ Future<void> presence(
   QuerySnapshot<Map<String, dynamic>> snapPresence = await colRef.get();
 
   String dayDocID = DateFormat.yMd().format(now).replaceAll("/", '-');
-
   if (distance <= 300) {
-    status = "in the coverage area";
+    status = "In area";
     if (snapPresence.docs.isEmpty) {
-      // if ()
-      print("Masuk");
-      colRef.doc(dayDocID).set(
-        {
-          "date": now.toIso8601String(),
-          "IN": {
-            "date": now.toIso8601String(),
-            "Lat": position.latitude,
-            "long": position.longitude,
-            "Status": status,
-            "distance": distance,
-          }
-        },
+      Get.defaultDialog(
+        title: "Welcome,",
+        middleText: "Presence IN ?",
+        actions: [
+          OutlinedButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text("Back"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              //
+              print("Masuk");
+              colRef.doc(dayDocID).set(
+                {
+                  "date": now.toIso8601String(),
+                  "In": {
+                    "date": now.toIso8601String(),
+                    "Lat": position.latitude,
+                    "long": position.longitude,
+                    "status": status,
+                    "distance": distance,
+                    "address": address
+                  }
+                },
+              );
+              Get.back();
+              Get.snackbar("Success", "Presence IN");
+            },
+            child: const Text("OK"),
+          )
+        ],
       );
-      Get.snackbar("Success", "Presence IN");
     } else {
       // sudah masuk & keluar
       DocumentSnapshot<Map<String, dynamic>> dayDoc =
@@ -114,37 +133,77 @@ Future<void> presence(
           Get.snackbar("Warning", "You has presence in and out today !");
         } else {
           //
-          print('Keluar');
-          colRef.doc(dayDocID).update(
-            {
-              "date": now.toIso8601String(),
-              "Out": {
-                "date": now.toIso8601String(),
-                "Lat": position.latitude,
-                "long": position.longitude,
-                "Status": status,
-                "distance": distance,
-              }
-            },
+          Get.defaultDialog(
+            title: "Welcome,",
+            middleText: "Presence Out ?",
+            actions: [
+              OutlinedButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text("Back"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  //
+                  print('Keluar');
+                  colRef.doc(dayDocID).update(
+                    {
+                      "date": now.toIso8601String(),
+                      "Out": {
+                        "date": now.toIso8601String(),
+                        "Lat": position.latitude,
+                        "long": position.longitude,
+                        "status": status,
+                        "distance": distance,
+                        "address": address
+                      }
+                    },
+                  );
+                  Get.back();
+                  Get.snackbar("Success", "Presence OUT");
+                },
+                child: const Text("OK"),
+              )
+            ],
           );
-          Get.snackbar("Success", "Presence OUT");
         }
         //
       } else {
-        print("Next Day");
-        colRef.doc(dayDocID).set(
-          {
-            "date": now.toIso8601String(),
-            "IN": {
-              "date": now.toIso8601String(),
-              "Lat": position.latitude,
-              "long": position.longitude,
-              "Status": status,
-              "distance": distance,
-            }
-          },
+        Get.defaultDialog(
+          title: "Welcome,",
+          middleText: "Presence IN ?",
+          actions: [
+            OutlinedButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text("Back"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                print("Masuk");
+                colRef.doc(dayDocID).set(
+                  {
+                    "date": now.toIso8601String(),
+                    "In": {
+                      "date": now.toIso8601String(),
+                      "Lat": position.latitude,
+                      "long": position.longitude,
+                      "status": status,
+                      "address": address,
+                      "distance": distance,
+                    }
+                  },
+                );
+                Get.back();
+                Get.snackbar("Success", "Presence IN");
+                //
+              },
+              child: const Text("OK"),
+            )
+          ],
         );
-        //
       }
     }
   } else {

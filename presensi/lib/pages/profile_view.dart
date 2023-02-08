@@ -95,13 +95,18 @@ class UserProfile extends StatelessWidget {
                 const SizedBox(
                   height: 45,
                 ),
-
                 if (user["role"] == "admin")
                   ListTile(
                     onTap: () => Get.toNamed(RouteName.addsiswa),
                     leading: const Icon(Icons.person_add_alt_1),
                     title: const Text("Add Siswa"),
                   ),
+                // if (user['role'] != "admin")
+                //   Container(
+                //     height: 100,
+                //     width: 100,
+                //     color: Colors.red,
+                //   ),
                 ListTile(
                   onTap: () =>
                       Get.toNamed(RouteName.updateprofile, arguments: user),
