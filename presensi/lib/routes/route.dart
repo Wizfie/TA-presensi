@@ -21,7 +21,7 @@ class AppPage {
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
-      name: RouteName.admin,
+      name: RouteName.homeView,
       page: () => HomeAdmin(),
       middlewares: [MyMiddelware()],
       transition: Transition.fadeIn,
@@ -89,7 +89,7 @@ class MyMiddelware extends GetMiddleware {
 
 abstract class RouteName {
   static const login = "/";
-  static const admin = "/admin";
+  static const homeView = "/homeView";
   static const profile = "/profile";
   static const addsiswa = "/addSiswa";
   static const form = "/form";

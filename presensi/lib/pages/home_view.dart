@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:get/get.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:presensi/controller/bottom_control.dart';
 import 'package:presensi/controller/stream_user.dart';
@@ -13,23 +15,40 @@ import 'package:presensi/routes/route.dart';
 class HomeAdmin extends StatelessWidget {
   HomeAdmin({super.key});
   var warna = [
-    const Color.fromARGB(255, 190, 190, 190),
-    const Color.fromARGB(255, 32, 167, 245)
+    const Color.fromARGB(251, 2, 156, 184),
+    const Color.fromARGB(255, 92, 92, 91),
+    const Color.fromARGB(226, 44, 199, 186),
+    const Color.fromARGB(226, 44, 199, 186),
   ];
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  // String profileImage = "https://ui-avatars.com/api/?name=${user['name']}";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text("Home"),
-        centerTitle: true,
-        backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.blue[800],
+      bottomNavigationBar: Container(
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          child: GNav(
+              backgroundColor: Colors.black,
+              color: Colors.white,
+              activeColor: Colors.white,
+              tabBackgroundColor: Colors.grey.shade800,
+              padding: const EdgeInsets.all(20),
+              gap: 10,
+              tabs: const [
+                GButton(
+                  icon: Icons.home,
+                  text: "Home",
+                ),
+                GButton(
+                  icon: Icons.people_alt,
+                  text: "Profile",
+                ),
+              ]),
+        ),
       ),
       body: SafeArea(
         child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -42,33 +61,28 @@ class HomeAdmin extends StatelessWidget {
             }
             if (snapshot.hasData) {
               Map<String, dynamic> user = snapshot.data!.data()!;
-              String profileImage =
-                  "https://ui-avatars.com/api/?name=${user['name']}";
 
               return ListView(
-                padding: const EdgeInsets.all(20),
                 children: [
                   Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: warna[0],
-                            borderRadius: const BorderRadiusDirectional.all(
-                                Radius.circular(20))),
-                        // width: 460,
-                        height: 180,
+                      Padding(
                         padding: const EdgeInsets.all(20),
                         child: Row(
                           children: [
-                            ClipOval(
-                              child: Container(
-                                width: 70,
-                                height: 70,
-                                // color: Colors.grey[400],
-                                child: Image.network(
-                                  profileImage,
-                                  fit: BoxFit.cover,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Initicon(
+                                text: "${user['name']}",
+                                style: const TextStyle(color: Colors.white),
+                                elevation: 4,
+                                size: 80,
+                                backgroundColor: Colors.blue.shade600,
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2,
                                 ),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                             const SizedBox(
@@ -84,22 +98,44 @@ class HomeAdmin extends StatelessWidget {
                                     "Welcome ,",
                                     style: TextStyle(
                                         fontSize: 15,
-                                        fontWeight: FontWeight.w300),
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.white),
                                   ),
                                   const SizedBox(
                                     height: 5,
                                   ),
                                   Text("${user['name']}",
                                       style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600)),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                      )),
                                   const SizedBox(
                                     height: 5,
                                   ),
-                                  Text("${user['nim']}",
-                                      style: const TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400)),
+                                  Row(
+                                    children: [
+                                      Text("${user['role']}",
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.white,
+                                          )),
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        width: 5,
+                                        height: 2,
+                                        color: Colors.white,
+                                      ),
+                                      Text("${user['nim']}",
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.white,
+                                          )),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -111,52 +147,70 @@ class HomeAdmin extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  if (user['role'] != "admin")
-                    Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.blue),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: ListTile(
-                                leading: const Icon(
-                                  Icons.location_on,
-                                  size: 40,
-                                ),
-                                title: const Text(
-                                  "Location",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                subtitle: Text(
-                                  user['address'] ?? "Location not avaliable",
-                                  style: const TextStyle(fontSize: 15),
-                                )),
-                          ),
-                        ],
+                  if (user['role'] == "admin")
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.blue),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: ListTile(
+                                  leading: const Icon(
+                                    Icons.location_on,
+                                    size: 40,
+                                    color: Colors.red,
+                                  ),
+                                  title: const Text(
+                                    "Location",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                  subtitle: Text(
+                                    user['address'] ?? "Location not avaliable",
+                                    style: const TextStyle(
+                                        fontSize: 15, color: Colors.white),
+                                  )),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   const SizedBox(
                     height: 15,
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // klik presence
+                        presenceButton();
+                      },
+                      child: const Text("Presence"),
+                    ),
+                  ),
                   StreamBuilder(
-                      stream: streamDoc(),
-                      builder: (context, snapshot3) {
-                        if (snapshot3.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        Map<String, dynamic>? todayAtt = snapshot3.data!.data();
-                        return Row(
+                    stream: streamDoc(),
+                    builder: (context, snapshot3) {
+                      if (snapshot3.connectionState ==
+                          ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      Map<String, dynamic>? todayAtt = snapshot3.data!.data();
+                      return Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Row(
                           children: <Widget>[
                             Expanded(
                               child: LayoutBuilder(
@@ -178,16 +232,24 @@ class HomeAdmin extends StatelessWidget {
                                             child: Text(
                                               "IN",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(
                                             height: 10,
                                           ),
                                           Center(
-                                            child: Text(todayAtt?['In'] == null
-                                                ? "-,-"
-                                                : "${DateFormat.jm().format(DateTime.parse(todayAtt!['In']['date']))}"),
+                                            child: Text(
+                                              todayAtt?['In'] == null
+                                                  ? "-,-"
+                                                  : "${DateFormat.jm().format(DateTime.parse(todayAtt!['In']['date']))}",
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -195,8 +257,7 @@ class HomeAdmin extends StatelessWidget {
                                   } else {
                                     return Container(
                                       decoration: const BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 190, 190, 190),
+                                          color: Colors.green,
                                           borderRadius:
                                               BorderRadiusDirectional.all(
                                             Radius.circular(20),
@@ -213,16 +274,24 @@ class HomeAdmin extends StatelessWidget {
                                             child: Text(
                                               "IN",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(
                                             height: 10,
                                           ),
                                           Center(
-                                            child: Text(todayAtt?['In'] == null
-                                                ? "-,-"
-                                                : "${DateFormat.jm().format(DateTime.parse(todayAtt!['In']['date']))}"),
+                                            child: Text(
+                                              todayAtt?['In'] == null
+                                                  ? "-,-"
+                                                  : "${DateFormat.jm().format(DateTime.parse(todayAtt!['In']['date']))}",
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -240,8 +309,7 @@ class HomeAdmin extends StatelessWidget {
                                   if (constraints.maxWidth > 600) {
                                     return Container(
                                       decoration: const BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 190, 190, 190),
+                                          color: Colors.red,
                                           borderRadius:
                                               BorderRadiusDirectional.all(
                                             Radius.circular(20),
@@ -254,16 +322,24 @@ class HomeAdmin extends StatelessWidget {
                                             child: Text(
                                               "OUT",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(
                                             height: 10,
                                           ),
                                           Center(
-                                            child: Text(todayAtt?['Out'] == null
-                                                ? "-,-"
-                                                : "${DateFormat.jm().format(DateTime.parse(todayAtt!['Out']['date']))}"),
+                                            child: Text(
+                                              todayAtt?['Out'] == null
+                                                  ? "-,-"
+                                                  : "${DateFormat.jm().format(DateTime.parse(todayAtt!['Out']['date']))}",
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -271,8 +347,7 @@ class HomeAdmin extends StatelessWidget {
                                   } else {
                                     return Container(
                                       decoration: const BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 190, 190, 190),
+                                          color: Colors.red,
                                           borderRadius:
                                               BorderRadiusDirectional.all(
                                             Radius.circular(20),
@@ -289,16 +364,23 @@ class HomeAdmin extends StatelessWidget {
                                             child: Text(
                                               "OUT",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
                                             ),
                                           ),
                                           const SizedBox(
                                             height: 10,
                                           ),
                                           Center(
-                                            child: Text(todayAtt?['Out'] == null
-                                                ? "-,-"
-                                                : "${DateFormat.jm().format(DateTime.parse(todayAtt!['In']['date']))}"),
+                                            child: Text(
+                                              todayAtt?['Out'] == null
+                                                  ? "-,-"
+                                                  : "${DateFormat.jm().format(DateTime.parse(todayAtt!['In']['date']))}",
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -308,132 +390,167 @@ class HomeAdmin extends StatelessWidget {
                               ),
                             ),
                           ],
-                        );
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Divider(
-                    thickness: 2,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Last 5 days",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          //
-                          Get.toNamed(RouteName.allDetail);
-                        },
-                        child: const Text(
-                          "See more...",
-                          style: TextStyle(color: Colors.black),
                         ),
-                      ),
-                    ],
-                  ),
-                  const Divider(
-                    thickness: 2,
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  StreamBuilder(
-                    stream: streamCollect2(),
-                    builder: (context, snapshot2) {
-                      if (snapshot2.connectionState ==
-                          ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (snapshot2.data?.docs.length == 0 ||
-                          snapshot2.data == null) {
-                        return const SizedBox(
-                          height: 200,
-                          child: Center(
-                            child: Text("No Data"),
-                          ),
-                        );
-                      }
+                  SingleChildScrollView(
+                    child: Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            // ignore: prefer_const_constructors
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: const Text(
+                                "History",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            const Divider(
+                              thickness: 1,
+                            ),
+                            StreamBuilder(
+                              stream: streamCollect2(),
+                              builder: (context, snapshot2) {
+                                if (snapshot2.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                if (snapshot2.data?.docs.length == 0 ||
+                                    snapshot2.data == null) {
+                                  return const SizedBox(
+                                    height: 200,
+                                    child: Center(
+                                      child: Text("No Data"),
+                                    ),
+                                  );
+                                }
 
-                      return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: snapshot2.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          Map<String, dynamic> data =
-                              snapshot2.data!.docs[index].data();
-                          return SingleChildScrollView(
-                            child: InkWell(
-                              onTap: () {
-                                //aksi
-                                Get.toNamed(RouteName.detailP, arguments: data);
-                                print(index);
-                              },
-                              child: Container(
-                                height: 130,
-                                margin: const EdgeInsets.only(bottom: 10),
-                                padding: const EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: warna[0],
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                return ListView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: snapshot2.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    Map<String, dynamic> data =
+                                        snapshot2.data!.docs[index].data();
+                                    return Column(
                                       children: [
-                                        const Text(
-                                          "IN :",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                        SingleChildScrollView(
+                                          child: InkWell(
+                                            onTap: () {
+                                              //aksi
+                                              Get.toNamed(RouteName.detailP,
+                                                  arguments: data);
+                                              print(index);
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(20.0),
+                                              child: Container(
+                                                height: 130,
+                                                margin: const EdgeInsets.only(
+                                                    bottom: 10),
+                                                padding:
+                                                    const EdgeInsets.all(20),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Colors.grey.shade300,
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text(
+                                                          "IN :",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        Text(
+                                                            "${DateFormat.yMEd().format(DateTime.parse(data['date']))}"),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Text(data['In']?['date'] ==
+                                                            null
+                                                        ? "-.-"
+                                                        : "${DateFormat.Hms().format(DateTime.parse(data['In']!['date']))}"),
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: const [
+                                                        Text(
+                                                          "OUT :",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        Text("Present")
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Text(data['Out']?['date'] ==
+                                                            null
+                                                        ? "-.-"
+                                                        : "${DateFormat.Hms().format(DateTime.parse(data['Out']!['date']))}"),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                        Text(
-                                            "${DateFormat.yMEd().format(DateTime.parse(data['date']))}"),
                                       ],
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(data['In']?['date'] == null
-                                        ? "-.-"
-                                        : "${DateFormat.Hms().format(DateTime.parse(data['In']!['date']))}"),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text(
-                                          "OUT :",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text("Present")
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(data['Out']?['date'] == null
-                                        ? "-.-"
-                                        : "${DateFormat.Hms().format(DateTime.parse(data['Out']!['date']))}"),
-                                  ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                            SizedBox(
+                              child: MaterialButton(
+                                color: Colors.white,
+                                onPressed: () {
+                                  //
+                                  Get.toNamed(RouteName.allDetail);
+                                },
+                                child: const Text(
+                                  "See more...",
+                                  style: TextStyle(color: Colors.black),
                                 ),
                               ),
                             ),
-                          );
-                        },
-                      );
-                    },
-                  )
+                            const SizedBox(
+                              height: 20,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               );
             } else {
@@ -449,17 +566,16 @@ class HomeAdmin extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: ConvexAppBar(
-        backgroundColor: Colors.black,
-        top: -10,
-        initialActiveIndex: index.value = 0,
-        items: const [
-          TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.fingerprint_outlined, title: 'Attedance'),
-          TabItem(icon: Icons.people, title: 'Profile'),
-        ],
-        onTap: (int i) => changeIndex(i),
-      ),
+      // bottomNavigationBar: ConvexAppBar(
+      //   backgroundColor: Colors.black,
+      //   top: -10,
+      //   initialActiveIndex: index.value = 0,
+      //   items: const [
+      //     TabItem(icon: Icons.home, title: 'Home'),
+      //     TabItem(icon: Icons.people, title: 'Profile'),
+      //   ],
+      //   onTap: (int i) => changeIndex(i),
+      // ),
     );
   }
 }

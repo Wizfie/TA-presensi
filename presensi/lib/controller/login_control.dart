@@ -22,7 +22,7 @@ Future<void> login() async {
           if (passwordC.text == 'password') {
             Get.toNamed(RouteName.form);
           } else {
-            Get.toNamed(RouteName.admin);
+            Get.toNamed(RouteName.homeView);
           }
         } else {
           Get.defaultDialog(

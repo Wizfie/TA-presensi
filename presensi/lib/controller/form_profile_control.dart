@@ -22,7 +22,7 @@ void CompleteProfile() async {
         await auth.signInWithEmailAndPassword(
             email: email, password: newpasssC.text);
 
-        Get.offAllNamed(RouteName.admin);
+        Get.offAllNamed(RouteName.homeView);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           Get.snackbar(

@@ -33,9 +33,9 @@ void main() async {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Presensi App',
-            home:  const LoginPage(),
+            home: const LoginPage(),
             initialRoute:
-                snapshot.data != null ? RouteName.admin : RouteName.login,
+                snapshot.data != null ? RouteName.homeView : RouteName.login,
             getPages: AppPage.pages,
           );
         }),

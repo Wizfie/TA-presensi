@@ -24,38 +24,15 @@ String status = "outside area";
 
 void changeIndex(int i) async {
   switch (i) {
-    case 1:
-      Map<String, dynamic> response = await determinePosition();
-      if (response['error'] != true) {
-        print("Present");
-        Position position = response['position'];
-
-        List<Placemark> placemarks = await placemarkFromCoordinates(
-            position.latitude, position.longitude);
-
-        String address =
-            "${placemarks[0].thoroughfare} ${placemarks[0].subThoroughfare},  ${placemarks[0].subAdministrativeArea}";
-        await updateLocation(position, address);
-
-        // Set Coverage
-        double distance = Geolocator.distanceBetween(politeknik[0],
-            politeknik[1], position.latitude, position.longitude);
-
-        await presence(position, address, distance);
-
-        // Get.snackbar("Success", "Presence success");
-        print(placemarks);
-      } else {
-        Get.snackbar("Warning", "Cannot get your Location");
-      }
-
+    case 0:
+      Get.offAllNamed(RouteName.homeView);
       break;
-    case 2:
+    case 1:
       Get.offAllNamed(RouteName.profile);
 
       break;
     default:
-      Get.offAllNamed(RouteName.admin);
+      Get.offAllNamed(RouteName.homeView);
   }
 }
 
@@ -208,5 +185,31 @@ Future<void> presence(
     }
   } else {
     Get.snackbar("Warning", "You are outside the presence area");
+  }
+}
+
+void presenceButton() async {
+  Map<String, dynamic> response = await determinePosition();
+  if (response['error'] != true) {
+    print("Present");
+    Position position = response['position'];
+
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+
+    String address =
+        "${placemarks[0].thoroughfare} ${placemarks[0].subThoroughfare},  ${placemarks[0].subAdministrativeArea}";
+    await updateLocation(position, address);
+
+    // Set Coverage
+    double distance = Geolocator.distanceBetween(
+        politeknik[0], politeknik[1], position.latitude, position.longitude);
+
+    await presence(position, address, distance);
+
+    // Get.snackbar("Success", "Presence success");
+    print(placemarks);
+  } else {
+    Get.snackbar("Warning", "Cannot get your Location");
   }
 }

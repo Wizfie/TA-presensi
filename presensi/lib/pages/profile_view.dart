@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:get/get.dart';
 import 'package:presensi/controller/bottom_control.dart';
 import 'package:presensi/controller/login_control.dart';
@@ -17,11 +18,11 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.grey[900],
-        title: const Text('Profile'),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.grey[900],
+      //   title: const Text('Profile'),
+      //   centerTitle: true,
+      // ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: streamCollect1(),
         builder: (context, snapshot) {
@@ -32,25 +33,23 @@ class UserProfile extends StatelessWidget {
           }
           if (snapshot.hasData) {
             Map<String, dynamic> user = snapshot.data!.data()!;
-            String profileImage =
-                "https://ui-avatars.com/api/?name=${user['name']}";
-
-            // String gambar =
-            //     "https://firebasestorage.googleapis.com/v0/b/presensiapp-6a5e8.appspot.com/o/Screenshot%202023-01-08%20174754.png?alt=media&token=e6661610-3612-441e-bc7f-e20c7c086787";
             return ListView(
               padding: const EdgeInsets.all(20),
               children: [
                 Row(
                   children: [
-                    ClipOval(
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        // color: Colors.grey[400],
-                        child: Image.network(
-                          profileImage,
-                          fit: BoxFit.cover,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: Initicon(
+                        text: "${user['name']}",
+                        elevation: 4,
+                        size: 80,
+                        backgroundColor: Colors.brown,
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 2,
                         ),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     Container(
@@ -153,10 +152,9 @@ class UserProfile extends StatelessWidget {
       bottomNavigationBar: ConvexAppBar(
         backgroundColor: Colors.black,
         top: -10,
-        initialActiveIndex: index.value = 2,
+        initialActiveIndex: index.value = 1,
         items: const [
           TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.fingerprint_outlined, title: 'Attedance'),
           TabItem(icon: Icons.people, title: 'Profile'),
         ],
         onTap: (int i) => changeIndex(i),
