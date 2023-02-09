@@ -20,29 +20,29 @@ class UserProfile extends StatelessWidget {
       backgroundColor: Colors.white,
       bottomNavigationBar: Container(
         color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-          child: GNav(
-              backgroundColor: Colors.black,
-              selectedIndex: 1,
-              color: Colors.white,
-              activeColor: Colors.white,
-              tabBackgroundColor: Colors.grey.shade800,
-              padding: const EdgeInsets.all(20),
-              gap: 10,
-              onTabChange: (int i) => changeIndex(i),
-              tabs: const [
-                GButton(
-                  margin: EdgeInsets.only(left: 60),
-                  icon: Icons.home,
-                  text: "Home",
-                ),
-                GButton(
-                  margin: EdgeInsets.only(right: 60),
-                  icon: Icons.people_alt,
-                  text: "Profile",
-                ),
-              ]),
+        child: GNav(
+          backgroundColor: Colors.black,
+          selectedIndex: 1,
+          color: Colors.white,
+          activeColor: Colors.white,
+          tabBackgroundColor: Colors.grey.shade800,
+          padding: const EdgeInsets.all(20),
+          gap: 10,
+          onTabChange: (int i) => changeIndex(i),
+          tabs: const [
+            GButton(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.only(left: 60, top: 10),
+              icon: Icons.home,
+              text: "Home",
+            ),
+            GButton(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.only(right: 60, top: 10),
+              icon: Icons.people_alt,
+              text: "Profile",
+            ),
+          ],
         ),
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(

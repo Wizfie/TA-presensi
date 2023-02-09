@@ -3,14 +3,15 @@
 import 'package:get/get.dart';
 import 'package:presensi/pages/add_siswa.dart';
 import 'package:presensi/pages/all_details_presence.dart';
-import 'package:presensi/pages/form_profile.dart';
-import 'package:presensi/pages/home_view.dart';
 import 'package:presensi/pages/login_page.dart';
 import 'package:presensi/pages/profile_view.dart';
-import 'package:presensi/pages/update_password.dart';
-import 'package:presensi/pages/update_profile.dart';
 
+import '../component/detail_admin.dart';
 import '../pages/details_presence.dart';
+import '../pages/form_profile.dart';
+import '../pages/home_view.dart';
+import '../pages/update_password.dart';
+import '../pages/update_profile.dart';
 
 class AppPage {
   static final pages = [
@@ -76,6 +77,13 @@ class AppPage {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
+    GetPage(
+      name: RouteName.AdminView,
+      page: () => DetailAdmin(),
+      middlewares: [MyMiddelware()],
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
   ];
 }
 
@@ -97,4 +105,5 @@ abstract class RouteName {
   static const updateprofile = "/updateprofile";
   static const detailP = "/detail";
   static const allDetail = "/allDetail";
+  static const AdminView = "/adminview";
 }

@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import '../controller/addsiswa_control.dart';
+import 'package:presensi/controller/addsiswa_control.dart';
 
 class AddSiswa extends StatelessWidget {
   const AddSiswa({super.key});
@@ -53,6 +53,9 @@ class AddSiswa extends StatelessWidget {
           GestureDetector(
             onTap: () {
               addSiswa();
+              nameC.clear();
+              nimC.clear();
+              emailC.clear();
             },
             child: Container(
               height: 50,

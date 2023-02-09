@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:presensi/component/my_button.dart';
 import 'package:presensi/component/my_textfield.dart';
 import 'package:presensi/component/square_tile.dart';
+import 'package:presensi/controller/forgot_password_control.dart';
 import 'package:presensi/controller/login_control.dart';
-
-import '../controller/forgot_password_control.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

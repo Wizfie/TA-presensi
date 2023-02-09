@@ -47,6 +47,9 @@ class UpdatePassword extends StatelessWidget {
                 if (isLoading.isFalse) {
                   updatePassword();
                 }
+                currPass.clear();
+                newPass.clear();
+                rePass.clear();
               },
               child: Container(
                 height: 50,

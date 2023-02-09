@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi/controller/update_profile_control.dart';
+
+import '../controller/update_profile_control.dart';
 
 class UpdateProfile extends StatelessWidget {
   // final UpdateProfile = Get.find<UpdateProfile>();
