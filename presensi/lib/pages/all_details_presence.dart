@@ -1,7 +1,12 @@
-// ignore_for_file: must_be_immutable, unnecessary_string_interpolations
+// ignore_for_file: must_be_immutable, unnecessary_string_interpolations, prefer_is_empty, avoid_print
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:presensi/controller/stream_user.dart';
+
+import '../routes/route.dart';
 
 class AllDetail extends StatelessWidget {
   AllDetail({super.key});
@@ -44,115 +49,100 @@ class AllDetail extends StatelessWidget {
           // Other Sliver Widgets
           SliverList(
             delegate: SliverChildListDelegate([
-              ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(20),
-                shrinkWrap: true,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return SingleChildScrollView(
-                    child: Container(
-                      height: 240,
-                      margin: const EdgeInsets.only(bottom: 10),
+              StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  stream: streamAllDetail(),
+                  builder: (context, snapAll) {
+                    if (snapAll.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapAll.data?.docs.length == 0 ||
+                        snapAll.data == null) {
+                      return const SizedBox(
+                        height: 200,
+                        child: Center(
+                          child: Text("No Data"),
+                        ),
+                      );
+                    }
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
                       padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: warna[0],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "${DateFormat.yMMMMEEEEd().format(DateTime.now())}",
+                      shrinkWrap: true,
+                      itemCount: snapAll.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        Map<String, dynamic> data =
+                            snapAll.data!.docs[index].data();
+                        return SingleChildScrollView(
+                          child: InkWell(
+                            onTap: () {
+                              //aksi
+                              Get.toNamed(RouteName.detailP, arguments: data);
+                              print(index);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Container(
+                                height: 130,
+                                margin: const EdgeInsets.only(bottom: 10),
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey.shade300,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "IN :",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                            "${DateFormat.yMEd().format(DateTime.parse(data['date']))}"),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(data['In']?['date'] == null
+                                        ? "-.-"
+                                        : "${DateFormat.Hms().format(DateTime.parse(data['In']!['date']))}"),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: const [
+                                        Text(
+                                          "OUT :",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text("Present")
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(data['Out']?['date'] == null
+                                        ? "-.-"
+                                        : "${DateFormat.Hms().format(DateTime.parse(data['Out']!['date']))}"),
+                                  ],
+                                ),
                               ),
-                            ],
+                            ),
                           ),
-                          const Divider(
-                            thickness: 2,
-                          ),
-                          Column(
-                            children: [
-                              Column(
-                                children: [
-                                  ListTile(
-                                    leading: const Icon(
-                                      Icons.circle,
-                                      color: Colors.green,
-                                    ),
-                                    title: const Padding(
-                                      padding: EdgeInsets.only(bottom: 5),
-                                      child: Text("IN :"),
-                                    ),
-                                    subtitle: Padding(
-                                      padding: const EdgeInsets.only(bottom: 3),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: const [
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom: 3),
-                                            child: Text("Time"),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom: 3),
-                                            child: Text("Location"),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    trailing: const Padding(
-                                      padding: EdgeInsets.only(top: 10),
-                                      child: Text("Telat"),
-                                    ),
-                                  ),
-                                  const Divider(
-                                    thickness: 1,
-                                  ),
-                                  ListTile(
-                                    leading: const Icon(
-                                      Icons.circle,
-                                      color: Colors.red,
-                                    ),
-                                    title: const Padding(
-                                      padding: EdgeInsets.only(bottom: 5),
-                                      child: Text("OUT :"),
-                                    ),
-                                    subtitle: Padding(
-                                      padding: const EdgeInsets.only(bottom: 3),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: const [
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom: 3),
-                                            child: Text("Time"),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom: 3),
-                                            child: Text("Location"),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    trailing: const Padding(
-                                      padding: EdgeInsets.only(top: 10),
-                                      child: Text("Pulang"),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+                        );
+                      },
+                    );
+                  }),
             ]),
           ),
         ],

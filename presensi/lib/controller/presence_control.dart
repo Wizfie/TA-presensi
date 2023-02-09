@@ -8,9 +8,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:presensi/component/maps.dart';
-import 'package:presensi/routes/route.dart';
 
-RxInt index = 0.obs;
+// RxInt index = 0.obs;
 FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -21,20 +20,6 @@ List<double> musholaRumah = [-6.2023946, 106.5334841];
 
 String status = "outside area";
 // String Ket = "07";
-
-void changeIndex(int i) async {
-  switch (i) {
-    case 0:
-      Get.offAllNamed(RouteName.homeView);
-      break;
-    case 1:
-      Get.offAllNamed(RouteName.profile);
-
-      break;
-    default:
-      Get.offAllNamed(RouteName.homeView);
-  }
-}
 
 Future<void> updateLocation(Position position, String address) async {
   String uid = await auth.currentUser!.uid;

@@ -86,35 +86,46 @@ class DetailPresence extends StatelessWidget {
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(bottom: 3),
-                                          child: Text(
-                                              "Time : ${DateFormat.jms().format(DateTime.parse(data['In']["date"]))}"),
+                                          child: Text(data['Out']?["date"] ==
+                                                  null
+                                              ? "Time : -,-"
+                                              : "Time : ${DateFormat.jms().format(DateTime.parse(data['Out']["date"]))}"),
                                         ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(bottom: 3),
                                           child: Text(
-                                            "Location : ${data['In']!['Lat']},${data['In']!['long']}",
+                                            data['Out']?['Lat'] == null &&
+                                                    data['Out']?['long'] == null
+                                                ? "Location : -,-"
+                                                : "Location : ${data['Out']!['Lat']},${data['Out']!['long']}",
                                           ),
                                         ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(bottom: 3),
                                           child: Text(
-                                            "Address : ${data['In']!['address']}",
+                                            data['Out']?['address'] == null
+                                                ? "Address : -,-"
+                                                : "Address : ${data['Out']!['address']}",
                                           ),
                                         ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(bottom: 3),
                                           child: Text(
-                                            "Status : ${data['In']!['status']}",
+                                            data['Out']?['status'] == null
+                                                ? "Status : -,-"
+                                                : "Status : ${data['Out']!['status']}",
                                           ),
                                         ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(bottom: 3),
                                           child: Text(
-                                            "Distance : ${data['In']!['distance'].toString().split(".").first} Meter",
+                                            data['Out']?['distance'] == null
+                                                ? "Distance : -,-"
+                                                : "Distance : ${data['Out']!['distance'].toString().split(".").first} m",
                                           ),
                                         ),
                                       ],
@@ -160,7 +171,7 @@ class DetailPresence extends StatelessWidget {
                                               const EdgeInsets.only(bottom: 3),
                                           child: Text(data['Out']?["date"] ==
                                                   null
-                                              ? "-,-"
+                                              ? "Time : -,-"
                                               : "Time : ${DateFormat.jms().format(DateTime.parse(data['Out']["date"]))}"),
                                         ),
                                         Padding(
@@ -169,7 +180,7 @@ class DetailPresence extends StatelessWidget {
                                           child: Text(
                                             data['Out']?['Lat'] == null &&
                                                     data['Out']?['long'] == null
-                                                ? "Location : --"
+                                                ? "Location : -,-"
                                                 : "Location : ${data['Out']!['Lat']},${data['Out']!['long']}",
                                           ),
                                         ),
@@ -197,7 +208,7 @@ class DetailPresence extends StatelessWidget {
                                           child: Text(
                                             data['Out']?['distance'] == null
                                                 ? "Distance : -,-"
-                                                : "Distance : ${data['Out']!['distance']}",
+                                                : "Distance : ${data['Out']!['distance'].toString().split(".").first} m",
                                           ),
                                         ),
                                       ],

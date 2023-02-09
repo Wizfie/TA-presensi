@@ -26,6 +26,17 @@ Stream<QuerySnapshot<Map<String, dynamic>>> streamCollect2() async* {
       .snapshots();
 }
 
+Stream<QuerySnapshot<Map<String, dynamic>>> streamAllDetail() async* {
+  String uid = auth.currentUser!.uid;
+
+  yield* firestore
+      .collection("siswa")
+      .doc(uid)
+      .collection('presence')
+      .orderBy('date', descending: true)
+      .snapshots();
+}
+
 Stream<DocumentSnapshot<Map<String, dynamic>>> streamDoc() async* {
   String uid = auth.currentUser!.uid;
 

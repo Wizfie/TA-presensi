@@ -1,14 +1,14 @@
 // ignore_for_file: must_be_immutable, unused_local_variable, sized_box_for_whitespace, unnecessary_string_interpolations, avoid_unnecessary_containers, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:get/get.dart';
-import 'package:presensi/controller/bottom_control.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:presensi/controller/login_control.dart';
 import 'package:presensi/controller/stream_user.dart';
 
+import '../controller/bottom_nav_control.dart';
 import '../routes/route.dart';
 
 class UserProfile extends StatelessWidget {
@@ -18,11 +18,33 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.grey[900],
-      //   title: const Text('Profile'),
-      //   centerTitle: true,
-      // ),
+      bottomNavigationBar: Container(
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          child: GNav(
+              backgroundColor: Colors.black,
+              selectedIndex: 1,
+              color: Colors.white,
+              activeColor: Colors.white,
+              tabBackgroundColor: Colors.grey.shade800,
+              padding: const EdgeInsets.all(20),
+              gap: 10,
+              onTabChange: (int i) => changeIndex(i),
+              tabs: const [
+                GButton(
+                  margin: EdgeInsets.only(left: 60),
+                  icon: Icons.home,
+                  text: "Home",
+                ),
+                GButton(
+                  margin: EdgeInsets.only(right: 60),
+                  icon: Icons.people_alt,
+                  text: "Profile",
+                ),
+              ]),
+        ),
+      ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: streamCollect1(),
         builder: (context, snapshot) {
@@ -53,7 +75,7 @@ class UserProfile extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(left: 50, top: 10),
+                      margin: const EdgeInsets.only(left: 50, top: 50),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -95,10 +117,12 @@ class UserProfile extends StatelessWidget {
                   height: 45,
                 ),
                 if (user["role"] == "admin")
-                  ListTile(
-                    onTap: () => Get.toNamed(RouteName.addsiswa),
-                    leading: const Icon(Icons.person_add_alt_1),
-                    title: const Text("Add Siswa"),
+                  Card(
+                    child: ListTile(
+                      onTap: () => Get.toNamed(RouteName.addsiswa),
+                      leading: const Icon(Icons.person_add_alt_1),
+                      title: const Text("Add Siswa"),
+                    ),
                   ),
                 // if (user['role'] != "admin")
                 //   Container(
@@ -106,29 +130,35 @@ class UserProfile extends StatelessWidget {
                 //     width: 100,
                 //     color: Colors.red,
                 //   ),
-                ListTile(
-                  onTap: () =>
-                      Get.toNamed(RouteName.updateprofile, arguments: user),
-                  leading: const Icon(Icons.person),
-                  title: const Text("Update Profile"),
+                Card(
+                  child: ListTile(
+                    onTap: () =>
+                        Get.toNamed(RouteName.updateprofile, arguments: user),
+                    leading: const Icon(Icons.person),
+                    title: const Text("Update Profile"),
+                  ),
                 ),
-                ListTile(
-                  onTap: () {
-                    Get.toNamed(RouteName.updatepassword);
-                  },
-                  leading: const Icon(Icons.lock_reset_outlined),
-                  title: const Text("Change Password"),
+                Card(
+                  child: ListTile(
+                    onTap: () {
+                      Get.toNamed(RouteName.updatepassword);
+                    },
+                    leading: const Icon(Icons.lock_reset_outlined),
+                    title: const Text("Change Password"),
+                  ),
                 ),
-                ListTile(
-                  onTap: () {
-                    {
-                      logOut();
-                    }
+                Card(
+                  child: ListTile(
+                    onTap: () {
+                      {
+                        logOut();
+                      }
 
-                    ///
-                  },
-                  leading: const Icon(Icons.logout),
-                  title: const Text("Logout"),
+                      ///
+                    },
+                    leading: const Icon(Icons.logout),
+                    title: const Text("Logout"),
+                  ),
                 )
               ],
             );
@@ -148,16 +178,6 @@ class UserProfile extends StatelessWidget {
             );
           }
         },
-      ),
-      bottomNavigationBar: ConvexAppBar(
-        backgroundColor: Colors.black,
-        top: -10,
-        initialActiveIndex: index.value = 1,
-        items: const [
-          TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.people, title: 'Profile'),
-        ],
-        onTap: (int i) => changeIndex(i),
       ),
     );
   }
