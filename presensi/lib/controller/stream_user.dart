@@ -67,9 +67,7 @@ Future<void> Delete(String uid) {
 }
 
 // Data
-Stream<QuerySnapshot<Map<String, dynamic>>> streamAdminDetail() async* {
-  String uid = auth.currentUser!.uid;
-
+Stream<QuerySnapshot<Map<String, dynamic>>> streamAdminDetail(uid) async* {
   yield* firestore
       .collection("siswa")
       .doc(uid)

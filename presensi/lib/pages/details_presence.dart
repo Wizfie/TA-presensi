@@ -86,46 +86,46 @@ class DetailPresence extends StatelessWidget {
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(bottom: 3),
-                                          child: Text(data['Out']?["date"] ==
+                                          child: Text(data['In']?["date"] ==
                                                   null
                                               ? "Time : -,-"
-                                              : "Time : ${DateFormat.jms().format(DateTime.parse(data['Out']["date"]))}"),
+                                              : "Time : ${DateFormat.jms().format(DateTime.parse(data['In']["date"]))}"),
                                         ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(bottom: 3),
                                           child: Text(
-                                            data['Out']?['Lat'] == null &&
-                                                    data['Out']?['long'] == null
+                                            data['In']?['Lat'] == null &&
+                                                    data['In']?['long'] == null
                                                 ? "Location : -,-"
-                                                : "Location : ${data['Out']!['Lat']},${data['Out']!['long']}",
+                                                : "Location : ${data['In']!['Lat']},${data['In']!['long']}",
                                           ),
                                         ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(bottom: 3),
                                           child: Text(
-                                            data['Out']?['address'] == null
+                                            data['In']?['address'] == null
                                                 ? "Address : -,-"
-                                                : "Address : ${data['Out']!['address']}",
+                                                : "Address : ${data['In']!['address']}",
                                           ),
                                         ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(bottom: 3),
                                           child: Text(
-                                            data['Out']?['status'] == null
+                                            data['In']?['status'] == null
                                                 ? "Status : -,-"
-                                                : "Status : ${data['Out']!['status']}",
+                                                : "Status : ${data['In']!['status']}",
                                           ),
                                         ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(bottom: 3),
                                           child: Text(
-                                            data['Out']?['distance'] == null
+                                            data['In']?['distance'] == null
                                                 ? "Distance : -,-"
-                                                : "Distance : ${data['Out']!['distance'].toString().split(".").first} m",
+                                                : "Distance : ${data['In']!['distance'].toString().split(".").first} m",
                                           ),
                                         ),
                                       ],

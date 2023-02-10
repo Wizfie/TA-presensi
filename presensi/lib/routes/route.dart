@@ -3,10 +3,10 @@
 import 'package:get/get.dart';
 import 'package:presensi/pages/add_siswa.dart';
 import 'package:presensi/pages/all_details_presence.dart';
+import 'package:presensi/pages/detail_admin.dart';
 import 'package:presensi/pages/login_page.dart';
 import 'package:presensi/pages/profile_view.dart';
 
-import '../component/detail_admin.dart';
 import '../pages/details_presence.dart';
 import '../pages/form_profile.dart';
 import '../pages/home_view.dart';

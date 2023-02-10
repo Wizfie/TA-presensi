@@ -187,8 +187,8 @@ void presenceButton() async {
     await updateLocation(position, address);
 
     // Set Coverage
-    double distance = Geolocator.distanceBetween(musholaRumah[0],
-        musholaRumah[1], position.latitude, position.longitude);
+    double distance = Geolocator.distanceBetween(
+        politeknik[0], politeknik[1], position.latitude, position.longitude);
 
     await presence(position, address, distance);
 

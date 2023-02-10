@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:presensi/controller/stream_user.dart';
+import 'package:presensi/controller/update_profile_control.dart';
 import 'package:presensi/routes/route.dart';
 
 import '../controller/bottom_nav_control.dart';
@@ -16,9 +17,9 @@ import '../controller/presence_control.dart';
 bool isVisible = false;
 
 class HomeAdmin extends StatelessWidget {
-  HomeAdmin({super.key});
-
   FirebaseAuth auth = FirebaseAuth.instance;
+
+  var data2;
 
   @override
   Widget build(BuildContext context) {
@@ -460,16 +461,16 @@ class HomeAdmin extends StatelessWidget {
                                               itemCount:
                                                   snapshot2.data!.docs.length,
                                               itemBuilder: (context, index) {
-                                                Map<String, dynamic> data =
-                                                    snapshot2.data!.docs[index]
-                                                        .data();
+                                                data2 = snapshot2
+                                                    .data!.docs[index]
+                                                    .data();
 
                                                 return InkWell(
                                                   onTap: () {
                                                     //aksi
                                                     Get.toNamed(
                                                         RouteName.detailP,
-                                                        arguments: data);
+                                                        arguments: data2);
                                                     print(index);
                                                   },
                                                   child: Padding(
@@ -509,17 +510,17 @@ class HomeAdmin extends StatelessWidget {
                                                                             .bold),
                                                               ),
                                                               Text(
-                                                                  "${DateFormat.yMEd().format(DateTime.parse(data['date']))}"),
+                                                                  "${DateFormat.yMEd().format(DateTime.parse(data2['date']))}"),
                                                             ],
                                                           ),
                                                           const SizedBox(
                                                             height: 5,
                                                           ),
-                                                          Text(data['In']?[
+                                                          Text(data2['In']?[
                                                                       'date'] ==
                                                                   null
                                                               ? "-.-"
-                                                              : "${DateFormat.Hms().format(DateTime.parse(data['In']!['date']))}"),
+                                                              : "${DateFormat.Hms().format(DateTime.parse(data2['In']!['date']))}"),
                                                           const SizedBox(
                                                             height: 10,
                                                           ),
@@ -541,11 +542,11 @@ class HomeAdmin extends StatelessWidget {
                                                           const SizedBox(
                                                             height: 5,
                                                           ),
-                                                          Text(data['Out']?[
+                                                          Text(data2['Out']?[
                                                                       'date'] ==
                                                                   null
                                                               ? "-.-"
-                                                              : "${DateFormat.Hms().format(DateTime.parse(data['Out']!['date']))}"),
+                                                              : "${DateFormat.Hms().format(DateTime.parse(data2['Out']!['date']))}"),
                                                         ],
                                                       ),
                                                     ),
@@ -620,7 +621,7 @@ class HomeAdmin extends StatelessWidget {
                                       // Map<String, dynamic> siswa =
                                       //     snapshot.data!.data()!;
 
-                                      print("laaaaaalalalalal");
+                                      // print("laaaaaalalalalal");
                                       // print(siswa);
                                       // Text(siswa['role']);
                                       return ListView.builder(
@@ -632,15 +633,20 @@ class HomeAdmin extends StatelessWidget {
                                           Map<String, dynamic> siswa =
                                               snap.data!.docs[index].data();
 
+                                          // if (siswa["role"] == "siswa")
                                           return InkWell(
                                             onTap: () {
                                               //
                                               Get.toNamed(RouteName.AdminView,
                                                   arguments: siswa);
+                                              print(data2);
                                             },
                                             child: Card(
                                               child: ListTile(
-                                                title: Text(siswa['name']),
+                                                title: Text(
+                                                  siswa['name'],
+                                                ),
+                                                subtitle: Text(siswa["role"]),
                                                 trailing: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
@@ -648,6 +654,10 @@ class HomeAdmin extends StatelessWidget {
                                                     IconButton(
                                                       onPressed: () {
                                                         //
+                                                        Get.toNamed(
+                                                            RouteName
+                                                                .updateprofile,
+                                                            arguments: user);
                                                       },
                                                       icon: Icon(
                                                         Icons.edit,
@@ -657,7 +667,11 @@ class HomeAdmin extends StatelessWidget {
                                                     IconButton(
                                                       onPressed: () {
                                                         //
-                                                        Delete;
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection('siswa')
+                                                            .doc(siswa['uid'])
+                                                            .delete();
                                                       },
                                                       icon: Icon(
                                                         Icons.delete,

@@ -8,7 +8,6 @@ import '../controller/update_profile_control.dart';
 class UpdateProfile extends StatelessWidget {
   // final UpdateProfile = Get.find<UpdateProfile>();
   UpdateProfile({super.key});
-
   Map<String, dynamic> user = Get.arguments;
 
   @override
@@ -17,6 +16,7 @@ class UpdateProfile extends StatelessWidget {
     updateNim.text = user['nim'];
     updateName.text = user['name'];
     updateEmail.text = user['email'];
+    var role = user['role'];
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -28,13 +28,22 @@ class UpdateProfile extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          TextField(
-            readOnly: true,
-            controller: updateNim,
-            // ignore: prefer_const_constructors
-            decoration: const InputDecoration(
-                labelText: 'Nim', border: OutlineInputBorder()),
-          ),
+          if (role == "admin")
+            TextField(
+              readOnly: false,
+              controller: updateNim,
+              // ignore: prefer_const_constructors
+              decoration: const InputDecoration(
+                  labelText: 'Nim', border: OutlineInputBorder()),
+            ),
+          if (role == "siswa")
+            TextField(
+              readOnly: true,
+              controller: updateNim,
+              // ignore: prefer_const_constructors
+              decoration: const InputDecoration(
+                  labelText: 'Nim', border: OutlineInputBorder()),
+            ),
           const SizedBox(
             height: 20,
           ),
